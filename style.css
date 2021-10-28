@@ -1,0 +1,24 @@
+.top-bar{
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 60px;
+    justify-content: space-between;
+    padding: 0;
+}
+.top-bar-btn{
+    padding: 1% 5% 0 0;
+}
+.board{
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: repeat(7, 1fr);
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+    width: 25vw;
+    height: 25vw;
+    background-color: aqua;
+    margin: 100px auto auto auto;
+}

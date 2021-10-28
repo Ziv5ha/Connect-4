@@ -19,7 +19,7 @@ class view {
         const head = this.createElement('h1')
         head.textContent = 'Connect 4!'
         bar.appendChild(head)
-        const btnDiv = this.createElement('div')
+        const btnDiv = this.createElement('div', 'top-bar-btn')
         const player1 = this.createElement('button', 'player1-btn')
         const player2 = this.createElement('button', 'player2-btn')
         const clearBtn = this.createElement('button', 'clear')
@@ -33,7 +33,7 @@ class view {
     #rowNum = 7
     generateBoard(){
         const board = this.createElement('div', 'board')
-        for (let i = 1; i <= this.#rowNum**2; i++) {
+        for (let i = this.#rowNum**2; i >= 1; i--) {
             const tileElem = this.createElement('div', 'tile')
             tileElem.id = i
             board.appendChild(tileElem)
@@ -46,11 +46,14 @@ class view {
     //     }
     // }
     makeAMove(moveHandler){
-        this.board.addEventlistener('click', ({target})=>{
+        this.board.addEventListener('click', ({target})=>{
+            // console.log(target.id);
             if(moveHandler(target.id)){
-                const row = target.is % 7
+                const row = Number(target.id) % 7
+                // console.log(row);
                 const tileElem = this.getElement(this.placeOfTileInRow(row))
-                tileElem.classList.add(this.player1Turn)
+                console.log(tileElem);
+                tileElem.classList.add(this.player(this.player1Turn))
                 this.player1Turn = !this.player1Turn
             }
         })
@@ -58,13 +61,18 @@ class view {
     placeOfTileInRow(row){
         let num
         while(!num){
+            if (row === 0) row += 7
             const tileElem = this.getElement(row)
             if (tileElem.classList.contains('player1') || tileElem.classList.contains('player2')){
-                num = row
-            } else {
                 row += 7
+            } else {
+                num = row
             }
         }
         return num
+    }
+    player(t){
+        if(t) return 'player1'
+        return 'player2'
     }
 }
