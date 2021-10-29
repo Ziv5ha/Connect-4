@@ -1,4 +1,4 @@
-class view {
+class View {
     constructor (){
         this.app = this.getElement('root')
         this.topBar = this.generateTopBar()
@@ -45,15 +45,19 @@ class view {
     //         img.remove()
     //     }
     // }
-    makeAMove(moveHandler){
+    makeAMove(moveHandler, winHandler){
         this.board.addEventListener('click', ({target})=>{
             // console.log(target.id);
-            if(moveHandler(target.id)){
+            if(!target.classList.contains('player1') && !target.classList.contains('player2')){
+                // console.log(target.id);
                 const row = Number(target.id) % 7
                 // console.log(row);
                 const tileElem = this.getElement(this.placeOfTileInRow(row))
+                // console.log('and now this far');
+                moveHandler(this.placeOfTileInRow(row))
                 console.log(tileElem);
                 tileElem.classList.add(this.player(this.player1Turn))
+                checkWin(winHandler)
                 this.player1Turn = !this.player1Turn
             }
         })
@@ -74,5 +78,12 @@ class view {
     player(t){
         if(t) return 'player1'
         return 'player2'
+    }
+    checkWin(winHandler){
+        if (winHandler()){
+            const winElem = this.createElement('div', 'win')
+            winElem.textContent = `${this.player(this.player1Turn)} won!`
+            this.app.appendChild(winElem)
+        }
     }
 }
