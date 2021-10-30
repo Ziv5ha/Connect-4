@@ -1,13 +1,18 @@
-class controller {
+class Controller {
+    // model = new Model()
+    // view = new View()
     constructor (){
+        this.model = new Model()
+        this.view = new View()
+        
+        this.view.playEvent.addListener(tileId => { this.model.play(tileId); })
+        this.view.newGameEvent.addListener(() => this.model.reset())
 
+        this.model.updateCellEvent.addListener(data => { this.view.updateBoard(data); })
+        this.model.victoryEvent.addListener(winner => { this.view.checkWin(winner); })
+        
     }
-    getelement(elemId){
-        return document.getElementById(elemId)
-    }
-    createElement(tag, className){
-        const elem = document.createElement(tag)
-        elem.classList.add(className)
-        return elem
+    run(){
+        this.view.render()
     }
 }
