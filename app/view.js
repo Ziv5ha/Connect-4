@@ -1,10 +1,13 @@
 class View {
     constructor (){
+        this.playEvent = new Event()
         this.app = this.getElement('root')
+        this.player1Turn = true
+    }
+    render(){
         this.topBar = this.generateTopBar()
         this.board = this.generateBoard()
         this.app.append(this.topBar, this.board)
-        this.player1Turn = true
     }
     getElement(elemId){
         return document.getElementById(elemId)
@@ -38,6 +41,13 @@ class View {
             tileElem.id = i
             board.appendChild(tileElem)
         }
+        board.addEventListener('click', ({target})=>{
+            if(!target.classList.contains('player1') && !target.classList.contains('player2')){
+                const row = Number(target.id) % 7
+                this.playEvent.trigger(this.placeOfTileInRow(row))
+                this.player1Turn = !this.player1Turn
+            }
+        })
         return board
     }
     // clearBoard(){
@@ -45,22 +55,9 @@ class View {
     //         img.remove()
     //     }
     // }
-    makeAMove(moveHandler, winHandler){
-        this.board.addEventListener('click', ({target})=>{
-            // console.log(target.id);
-            if(!target.classList.contains('player1') && !target.classList.contains('player2')){
-                // console.log(target.id);
-                const row = Number(target.id) % 7
-                // console.log(row);
-                const tileElem = this.getElement(this.placeOfTileInRow(row))
-                // console.log('and now this far');
-                moveHandler(this.placeOfTileInRow(row))
-                console.log(tileElem);
-                tileElem.classList.add(this.player(this.player1Turn))
-                checkWin(winHandler)
-                this.player1Turn = !this.player1Turn
-            }
-        })
+    updateBoard({tileId, player}){
+        const tileElem = this.getElement(tileId)
+        tileElem.classList.add(player)
     }
     placeOfTileInRow(row){
         let num
@@ -75,15 +72,9 @@ class View {
         }
         return num
     }
-    player(t){
-        if(t) return 'player1'
-        return 'player2'
-    }
-    checkWin(winHandler){
-        if (winHandler()){
-            const winElem = this.createElement('div', 'win')
-            winElem.textContent = `${this.player(this.player1Turn)} won!`
-            this.app.appendChild(winElem)
-        }
+    checkWin(winner){
+        const winElem = this.createElement('div', 'win')
+        winElem.textContent = `${winner} won!`
+        this.app.appendChild(winElem)
     }
 }

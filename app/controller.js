@@ -1,17 +1,17 @@
 class Controller {
-    model = new Model()
-    view = new View()
-    constructor (){//model, view){
-        // this.model = model
-        // this.view = view
-    }
-    moveHandler(move){
-        this.model.move(move)
-    }
-    winHandler(){
-        this.model.testWin()
+    // model = new Model()
+    // view = new View()
+    constructor (){
+        this.model = new Model()
+        this.view = new View()
+        
+        this.view.playEvent.addListener(tileId => { this.model.play(tileId); })
+
+        this.model.updateCellEvent.addListener(data => { this.view.updateBoard(data); })
+        this.model.victoryEvent.addListener(winner => { this.view.checkWin(winner); })
+        
     }
     run(){
-        this.view.makeAMove(this.moveHandler, this.winHandler)
+        this.view.render()
     }
 }

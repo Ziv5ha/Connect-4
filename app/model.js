@@ -4,15 +4,22 @@ class Model {
         this.player1 = []
         this.player2 = []
         this.player1Turn = true
+        this.finished = false
+
+        this.updateCellEvent = new Event();
+        this.victoryEvent = new Event();
     }
-    move(tileId){
-        console.log(tileId);
+    play(tileId){
+        if (this.finished) return false
         this.player1Turn ? this.player1.push(tileId) : this.player2.push(tileId)
-        this.player1Turn = !this.player1Turn
-        console.log(`player 1 [${this.player1}]`)
-        console.log(`player 2 [${this.player2}]`)
-        this.testWin()
+        this.updateCellEvent.trigger({tileId, player: this.currentPlayer()})
+        this.finished = this.testWin()
+        if (!this.finished) this.player1Turn = !this.player1Turn
         return true
+    }
+    currentPlayer(){
+        if (this.player1Turn) return 'player1'
+        return 'player2'
     }
     generateWinningArr(){
         const winArr = []
@@ -24,7 +31,6 @@ class Model {
             this.generateWinningDia(winArr, row)
             this.generateWinningRevDia(winArr, row)
         }
-        // console.log(winArr);
         return winArr
     }
     generateWiiningRow(winArr, row){
@@ -54,16 +60,15 @@ class Model {
     testWin(){
         const winArr = this.generateWinningArr()
         for (const winningArr of winArr){
-            // console.log(...winningArr);
             if (this.player1Turn){
                 if (winningArr.every(i => this.player1.includes(i))){
-                    console.log('player 1 won!')
-                    return 'player 1 won'
+                    this.victoryEvent.trigger('player 1 won!')
+                    return true
                 }
             } else {
                 if (winningArr.every(i => this.player2.includes(i))){
-                    console.log('player 2 won!')
-                    return 'player 2 won'
+                    this.victoryEvent.trigger('player 2 won!')
+                    return true
                 }
             }
         }
