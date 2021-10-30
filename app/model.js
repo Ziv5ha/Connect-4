@@ -73,4 +73,10 @@ class Model {
             }
         }
     }
+    reset(){
+        this.player1 = []
+        this.player2 = []
+        this.player1Turn = true
+        this.finished = false
+    }
 }
