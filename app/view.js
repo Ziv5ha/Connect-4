@@ -121,7 +121,6 @@ class View {
     placeATile(tileElem){
         let tileColor
         const tile = this.createElement('div', 'p-tile')
-        // this.player1Turn ? tileColor = tile.classList.add('player1') : tile.classList.add('plaer2')
         this.player1Turn ? tileColor = this.player1.color : tileColor = this.player2.color
         tile.style.backgroundColor = tileColor
         tileElem.appendChild(tile)
@@ -134,9 +133,4 @@ class View {
         winElem.textContent = `${playerName} won!`
         this.app.appendChild(winElem)
     }
-    // clearBoard(){
-    //     for (const tileImg of document.querySelectorAll('tile-img')) {
-    //         img.remove()
-    //     }
-    // }
 }

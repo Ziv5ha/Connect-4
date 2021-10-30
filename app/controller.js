@@ -1,6 +1,4 @@
 class Controller {
-    // model = new Model()
-    // view = new View()
     constructor (){
         this.model = new Model()
         this.view = new View()
