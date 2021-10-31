@@ -48,7 +48,7 @@ h1{
     grid-row-gap: 0px;
     width: 600px;
     height: 600px;
-    background-color: aqua;
+    background-color: rgb(25, 163, 163);
     margin: 100px auto auto auto;
 }
 .win{
@@ -78,6 +78,74 @@ h1{
 @keyframes fall {
     from {
         position: relative;
-        margin: -300% 0 0 0;}
-    to {margin: 0;}
+        margin: -300% auto auto auto;}
+    to {margin: 0 auto auto auto;}
   }
+@media screen and (max-width: 800px) {
+    .top-bar{
+        height: 100px;
+    }
+    h1{
+        /* width: 200px; */
+        margin-left: 20px;
+        font-size: 40px;
+        color: rgb(189, 36, 36);
+    }
+    .clear-btn{
+        margin: 30px 50px 0 0;
+        height: 40px;
+        width: 100px;
+        font-size: 15px;
+        font-weight: 700;
+        border-radius: 14px;
+        background-color: rgb(235, 233, 231);
+    }
+    .top-bar-btn{
+        position: fixed;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 10% 3% 0 0;
+        height: 70px;
+        margin: 65vh 0 0 50vw;
+    }
+    .p-btn-div{
+        position: relative;
+        display: flex;
+        flex-direction:row;
+        justify-content: space-between;
+        margin-top: 10px;
+        width: 145px;
+    }
+    .player-btn{
+        height: 40px;
+        border-width: 0;
+        border-radius: 14px;
+
+    }
+    .name-input{
+        width: 100px;
+        font-size: 20px;
+        border-radius: 14px;
+
+    }
+    
+    .board{
+        width: 80vw;
+        height: 80vw;
+        margin: 200px auto auto auto;
+    }
+    .win{
+        margin: 150px auto;
+        padding: 10px;
+        width: 80vw;
+        height: 50vh;
+        font-size: 120px;
+        border-radius: 10px;
+    }
+    .p-tile{
+        width: 90%;
+        height: 90%;
+        margin: auto;
+    }
+}
